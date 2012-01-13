@@ -4,7 +4,6 @@
 	,	stack				= []
 	,	feedItemsCount 		= 0
 	,	$newFeedItemsCount 	= $('#new-feed-items-count')
-	,	$title 				= $('title')
 	,	publicFeedQuery 	= new Flikker.queries.PublicFeedQuery()
 	,	personQuery			= new Flikker.queries.PersonQuery()
 	,	templates			= {}
@@ -51,13 +50,13 @@
 	function updateNewFeedItemsCount(count) {
 		feedItemsCount += count;
 		$newFeedItemsCount.text(feedItemsCount);
-		$title[0].innerHTML = templates['title-template']({count: feedItemsCount});
+		document.title = templates['title-template']({count: feedItemsCount});
 	}
 	
 	function reset() {
 		stack = [];
 		feedItemsCount = 0;
-		$title[0].innerHTML = templates['title-template']({count: feedItemsCount});
+		document.title = templates['title-template']({count: feedItemsCount});
 		$showMore.addClass('hiddeni');
 	}
 	
