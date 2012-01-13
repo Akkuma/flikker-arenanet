@@ -1,0 +1,97 @@
+@import "preboot";
+@import "scaffolding";
+
+@imagePath: '../index_files';
+@sectionWidth: 61.6em;
+@pageWidth: 94em;
+
+body {
+	background: #C0DEED;
+	font-size: 	62.5%;
+	font-family:Arial, Helvetica, sans-serif;
+	
+	>header {
+		//background: 	url('@{imagePath}/header-bg.png') repeat-x;
+		border-bottom: 	1px solid #4D4B48;
+	}
+}
+
+ol, ul { list-style: none; }
+
+#head {
+	margin: 	0 auto;
+	width:		@pageWidth;
+	height:		10.4em;
+	position:	relative;
+	
+	a { 
+		color: #B8B6B4; 
+		&:hover { color: white !important; }
+	}
+	
+	li.active {
+		background: black;
+		background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);	 
+		background:	   -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);	 
+		background:		 -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);	 
+		background:		-ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);	
+
+		//filter:		~"progid:DXImageTransform.Microsoft.gradient( startColorstr=#00000000, endColorstr=#FF000000,GradientType=0 );
+		
+		//background: linear-gradient(top, hsla(189,31%,95%,1) 0%,hsla(190,32%,93%,1) 100%); /* W3C */
+		
+		
+		a { color: white; }
+	}
+}		
+
+#content {
+	background: white;
+	width:		540px;
+	
+	ul {
+		width:		100%;
+		padding:	0;
+		border-top: 1px solid @lightGrey;
+		
+		li {
+			border-top: 	1px solid transparent;
+			border-bottom:	1px solid @lightGrey;
+			padding:		10px;
+			
+			&.new { background: darken(#FFF,2%); }
+			&:hover { background: rgba(0, 132, 180, 0.1) !important; }
+			&.selected { background: darken(#FFF, 4%); }
+			
+			> .avatar, > div { .crossBrowserInlineBlock; }			
+			> div { 
+				width: 450px; 
+				
+				p {
+					margin: 0;
+					
+					&:first-child { margin-bottom: 10px; }
+				}
+			}
+		}	
+	}
+	
+	.avatar { 
+		margin-right:	15px;
+		width:			48px;
+		height:			48px;
+	}
+	
+	#show-more {
+		background: #C0DEED;
+		text-align:	center;
+		margin:		10px;
+		display:	block;
+		padding:	10px;
+	}
+}
+
+article { 
+	margin: 0 auto; 
+	width:	@pageWidth;
+}
