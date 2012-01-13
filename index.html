@@ -32,7 +32,8 @@
 	<footer></footer>
 	<script id="feed-items-template" type="text/x-handlebars-template">
 		{{#each items}}
-			<li id="{{sanitizeId author_id}}" class="new">
+			<li id="{{sanitizeId author_id}}" class="new">				
+				<img class="avatar invisible" />
 				<div>{{{description}}}</div>
 			</li>
 		{{/each}}

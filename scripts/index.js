@@ -34,6 +34,9 @@
 				var $feedItem = $('#'+personData.person.nsid.replace('@',''))
 				,	$avatar = $(templates['avatar-template'](personData.person))
 				;
+				
+				$feedItem.find('img.avatar').remove();
+				
 				$avatar.on('error', function () { $avatar.addClass('invisiblei'); });
 				
 				$feedItem.prepend($avatar);
