@@ -54,5 +54,5 @@ ol,ul{list-style:none;}
 #content ul li>.avatar,#content ul li>div{display:inline-block;zoom:1;*display:inline;vertical-align:top;}
 #content ul li>div{width:450px;}#content ul li>div p{margin:0;}#content ul li>div p:first-child{margin-bottom:10px;}
 #content .avatar{margin-right:15px;width:48px;height:48px;}
-#content #show-more{background:#c0deed;text-align:center;margin:10px;display:block;padding:10px;}
+#content #show-more{background:#d4e8f3;text-align:center;margin:10px;display:block;padding:10px;border:1px solid #acd4e7;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box;}
 article{margin:0 auto;width:90%;max-width:1140px;}

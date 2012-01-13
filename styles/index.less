@@ -46,11 +46,13 @@ ol, ul { list-style: none; }
 	}
 	
 	#show-more {
-		background: @lightBlue;
+		background: lighten(@lightBlue, 5%);
 		text-align:	center;
 		margin:		10px;
 		display:	block;
 		padding:	10px;
+		border:		1px solid darken(@lightBlue, 5%);
+		.border-radius(5px);
 	}
 }
 
