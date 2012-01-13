@@ -4,7 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Flikker</title>
-    <link rel="shortcut icon" href="favicon.ico" />
 	<link href="styles/index.css" rel="stylesheet" type="text/css">
 	<!--[if lt IE 9]>
         <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -19,10 +18,11 @@
 	<article>
 		<section id="content">
 			<header>
-				<h1>Public Flickr Images</h1>
+				<h1>Public Flickr Feed</h1>
 			</header>
 			<a id="show-more" href="/" class="hiddeni">
-				<span id="new-feed-items-count">0</span> more images since you viewed</a>
+				<span id="new-feed-items-count">0</span> more images since you viewed
+			</a>
 			<ul id="images">
 			</ul>
 		</section>
@@ -30,11 +30,21 @@
 		</aside>
 	</article>
 	<footer></footer>
+	<script id="feed-items-template" type="text/x-handlebars-template">
+		{{#each items}}
+			<li id="{{sanitizeId author_id}}" class="new">
+				<div>{{{description}}}</div>
+			</li>
+		{{/each}}
+	</script>
+	<script id="avatar-template" type="text/x-handlebars-template">
+		<img class="avatar" src="http://farm{{iconfarm}}.static.flickr.com/{{iconserver}}/buddyicons/{{id}}.jpg"/>
+	</script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="scripts/Flikker/Flikker.js"></script>
 	<script type="text/javascript" src="scripts/Flikker/queries/PersonQuery.js"></script>
 	<script type="text/javascript" src="scripts/Flikker/queries/PublicFeedQuery.js"></script>
+	<script type="text/javascript" src="scripts/Templating/handlebars-1.0.0.beta.6.js"></script>
 	<script type="text/javascript" src="scripts/index.js"></script>
-	</script>
 </body>
 </html>

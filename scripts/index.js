@@ -5,27 +5,40 @@
 	,	feedItemsCount 		= 0
 	,	$newFeedItemsCount 	= $('#new-feed-items-count')
 	,	$title 				= $('title')
+	,	originalTitleText	= $title.text()
 	,	publicFeedQuery 	= new Flikker.queries.PublicFeedQuery()
-	,	personQuery			= new Flikker.queries.PersonQuery();
+	,	personQuery			= new Flikker.queries.PersonQuery()
+	,	templates			= {}
+	,	$showMore 			= $('#show-more')
 	;
-
+	
+	function filterItems(items, objToFilterAgainst) {
+		objToFilterAgainst = objToFilterAgainst || oldImages;
+		
+		return $.grep(items, function (val, key) {
+				var isNew = false;
+				
+				if (!objToFilterAgainst[val.link]) {
+					objToFilterAgainst[val.link] = 1
+					isNew = true;
+				}
+				
+				return isNew;
+			});
+	}
+	
 	function addFeedDataToList(data) {
+		data.items = filterItems(data.items);
+		$images.prepend(templates['feed-items-template'](data));
 		$.each(data.items, function (key, val) {
-			var link = val.link;
-			if (!oldImages[link]) {
-				oldImages[link] = 1;
-				$images.prepend('<li id="' +val.author_id.replace('@','')+'" class="new"><div>' + val.description + '</div></li>');
-				personQuery.getById(val.author_id).done(function (data) {
-					var $feedItem = $('#'+data.person.nsid.replace('@',''))
-					,	$avatar = $('<img class="avatar" />')
-					;
-
-					$avatar[0].src = 'http://farm'+data.person.iconfarm+'.static.flickr.com/'+data.person.iconserver+'/buddyicons/'+data.person.nsid+'.jpg';							
-					$avatar.on('error', function () { $avatar.addClass('invisiblei'); });
-					
-					$feedItem.prepend($avatar);
-				})
-			}
+			personQuery.getById(val.author_id).done(function (personData) {
+				var $feedItem = $('#'+personData.person.nsid.replace('@',''))
+				,	$avatar = $(templates['avatar-template'](personData.person))
+				;
+				$avatar.on('error', function () { $avatar.addClass('invisiblei'); });
+				
+				$feedItem.prepend($avatar);
+			})
 		});	
 	}
 	
@@ -42,36 +55,43 @@
 	function reset() {
 		stack = [];
 		feedItemsCount = 0;
-		$title.text('Flikker');
+		$title.text(originalTitleText);
 		$showMore.addClass('hiddeni');
 	}
 	
 	function init() {
-		var $showMore = $('#show-more');
-						
+		$('script[type="text/x-handlebars-template"]').each(function (key, val) {
+			templates[val.id] = Handlebars.compile($(val).html());
+		});
+		
+		Handlebars.registerHelper('sanitizeId', function(id) {
+		  return id.replace('@','');
+		});
+
 		publicFeedQuery.getAll().done(addFeedDataToList);
 		setInterval(function () {
 			publicFeedQuery.getAll().done(function (data) {
-				if (data.items.length) {
-					updateNewFeedItemsCount(data.items.length);
+				var filteredItems = filterItems(data.items, $.extend(true, {}, oldImages));
+				if (filteredItems.length) {
+					updateNewFeedItemsCount(filteredItems.length);
 					$showMore.hasClass('hiddeni') && $showMore.hide().removeClass('hiddeni').fadeIn(2000);
 					addDataToStack(data)
 				}
 			});
-		}, 15000);
+		}, 10000);
 		
 		$showMore.on('click', function ($event) {
 			$event.preventDefault();
-								
-			$showMore.fadeOut(2500, function () {
-				reset();
-			});
 			
 			$images.find('li.new').removeClass('new');
 			
 			$.each(stack.reverse(), function (key, val) {
 				addFeedDataToList(val);
-			});					
+			});
+											
+			$showMore.fadeOut(2500, function () {
+				reset();
+			});
 		});
 		
 		var $previousSelected;
@@ -80,8 +100,7 @@
 				$previousSelected.removeClass('selected');
 			}
 			
-			$previousSelected = $(this);
-			$previousSelected.addClass('selected');
+			$previousSelected = $(this).addClass('selected');
 		})
 	}
 	
