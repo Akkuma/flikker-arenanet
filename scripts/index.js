@@ -40,7 +40,7 @@
 				$avatar.on('error', function () { $avatar.addClass('invisiblei'); });
 				
 				$feedItem.prepend($avatar);
-			})
+			});
 		});	
 	}
 	
@@ -51,13 +51,13 @@
 	function updateNewFeedItemsCount(count) {
 		feedItemsCount += count;
 		$newFeedItemsCount.text(feedItemsCount);
-		$title.text(templates['title-template']({count: feedItemsCount}));
+		$title.html(templates['title-template']({count: feedItemsCount}));
 	}
 	
 	function reset() {
 		stack = [];
 		feedItemsCount = 0;
-		$title.text(templates['title-template']({count: feedItemsCount}));
+		$title.html(templates['title-template']({count: feedItemsCount}));
 		$showMore.addClass('hiddeni');
 	}
 	
