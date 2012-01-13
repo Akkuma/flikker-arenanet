@@ -40,6 +40,13 @@
 	<script id="avatar-template" type="text/x-handlebars-template">
 		<img class="avatar" src="http://farm{{iconfarm}}.static.flickr.com/{{iconserver}}/buddyicons/{{id}}.jpg"/>
 	</script>
+	<script id="title-template" type="text/x-handlebars-template">
+		{{#if count}}
+			({{count}}) Flikker
+		{{else}}
+			Flikker
+		{{/if}}
+	</script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="scripts/Flikker/Flikker.js"></script>
 	<script type="text/javascript" src="scripts/Flikker/queries/PersonQuery.js"></script>

@@ -5,7 +5,6 @@
 	,	feedItemsCount 		= 0
 	,	$newFeedItemsCount 	= $('#new-feed-items-count')
 	,	$title 				= $('title')
-	,	originalTitleText	= $title.text()
 	,	publicFeedQuery 	= new Flikker.queries.PublicFeedQuery()
 	,	personQuery			= new Flikker.queries.PersonQuery()
 	,	templates			= {}
@@ -49,13 +48,13 @@
 	function updateNewFeedItemsCount(count) {
 		feedItemsCount += count;
 		$newFeedItemsCount.text(feedItemsCount);
-		$title.text('(' + feedItemsCount + ') Flikker');
+		$title.text(templates['title-template']({count: feedItemsCount}));
 	}
 	
 	function reset() {
 		stack = [];
 		feedItemsCount = 0;
-		$title.text(originalTitleText);
+		$title.text(templates['title-template']({count: feedItemsCount}));
 		$showMore.addClass('hiddeni');
 	}
 	
@@ -101,7 +100,7 @@
 			}
 			
 			$previousSelected = $(this).addClass('selected');
-		})
+		});
 	}
 	
 	init()
