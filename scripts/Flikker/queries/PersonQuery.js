@@ -5,7 +5,7 @@ Flikker.queries.PersonQuery = (function ($) {
 	PersonQuery.prototype = 
 	{
 		getById: function (userId) {
-			return $.getJSON(Flikker._restAPI + 'method=' + method + '&user_id=' + userId + '&format=json&nojsoncallback=1');
+			return $.getJSON(Flikker._restAPI + 'method=' + method + '&user_id=' + userId + '&format=json&jsoncallback=?');
 		}
 	}
 	;

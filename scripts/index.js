@@ -29,18 +29,20 @@
 		data.items = filterItems(data.items);
 		$images.prepend(templates['feed-items-template'](data));
 		$.each(data.items, function (key, val) {
-			personQuery.getById(val.author_id).done(function (personData) {
-				var $feedItem = $('#'+personData.person.nsid.replace('@',''))
-				,	$avatar = $(templates['avatar-template'](personData.person))
-				;
-				
-				$feedItem.find('img.avatar').remove();
-				
-				$avatar.on('error', function () { $avatar.addClass('invisiblei'); });
-				
-				$feedItem.prepend($avatar);
-			});
+			personQuery.getById(val.author_id).done(addAvatar);
 		});	
+	}
+	
+	function addAvatar(personData) {
+		var $feedItem = $('#'+personData.person.nsid.replace('@',''))
+		,	$avatar = $(templates['avatar-template'](personData.person))
+		;
+		
+		$feedItem.find('img.avatar').remove();
+		
+		$avatar.on('error', function () { $avatar.addClass('invisiblei'); });
+		
+		$feedItem.prepend($avatar);
 	}
 	
 	function addDataToStack(data) {
