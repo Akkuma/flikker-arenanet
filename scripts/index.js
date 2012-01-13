@@ -52,13 +52,17 @@
 	function updateNewFeedItemsCount(count) {
 		feedItemsCount += count;
 		$newFeedItemsCount.text(feedItemsCount);
+		updateTitle()
+	}
+	
+	function updateTitle() {
 		document.title = templates['title-template']({count: feedItemsCount});
 	}
 	
 	function reset() {
 		stack = [];
 		feedItemsCount = 0;
-		document.title = templates['title-template']({count: feedItemsCount});
+		updateTitle();
 		$showMore.addClass('hiddeni');
 	}
 	
