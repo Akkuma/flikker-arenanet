@@ -10,14 +10,12 @@
 	,	$showMore 			= $('#show-more')
 	;
 	
-	function filterItems(items, objToFilterAgainst) {
-		objToFilterAgainst = objToFilterAgainst || oldImages;
-		
+	function filterItems(items, shouldSave) {		
 		return $.grep(items, function (val, key) {
 				var isNew = false;
 				
-				if (!objToFilterAgainst[val.link]) {
-					objToFilterAgainst[val.link] = 1
+				if (!oldImages[val.link]) {
+					shouldSave && (oldImages[val.link] = 1);
 					isNew = true;
 				}
 				
@@ -26,7 +24,7 @@
 	}
 	
 	function addFeedDataToList(data) {
-		data.items = filterItems(data.items);
+		data.items = filterItems(data.items, true);
 		$images.prepend(templates['feed-items-template'](data));
 		$.each(data.items, function (key, val) {
 			personQuery.getById(val.author_id).done(addAvatar);
@@ -78,7 +76,7 @@
 		publicFeedQuery.getAll().done(addFeedDataToList);
 		setInterval(function () {
 			publicFeedQuery.getAll().done(function (data) {
-				var filteredItems = filterItems(data.items, $.extend(true, {}, oldImages));
+				var filteredItems = filterItems(data.items, false);
 				if (filteredItems.length) {
 					updateNewFeedItemsCount(filteredItems.length);
 					$showMore.hasClass('hiddeni') && $showMore.hide().removeClass('hiddeni').fadeIn(2000);
