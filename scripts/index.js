@@ -50,7 +50,7 @@
 	function updateNewFeedItemsCount(count) {
 		feedItemsCount += count;
 		$newFeedItemsCount.text(feedItemsCount);
-		updateTitle()
+		updateTitle();
 	}
 	
 	function updateTitle() {
@@ -109,5 +109,5 @@
 		});
 	}
 	
-	init()
+	init();
 }());
