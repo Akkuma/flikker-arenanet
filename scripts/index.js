@@ -86,19 +86,20 @@
 		(function loop() {
 			//Optimally we'd prefer to stream the data rather than poll for it
 			setTimeout(function () {
-				publicFeedQuery.getAll().done(function (data) {
-					var filteredItems = filterItems(data.items, false);
-					if (filteredItems.length) {
-						//We don't want to overload the user with new data as we'll never run out of new images to see from Flickr
-						//so we give the user additional time after each poll
-						currentPollInterval += pollIntervalIncrement;
-						updateNewFeedItemsCount(filteredItems.length);
-						$showMore.hasClass('hiddeni') && $showMore.hide().removeClass('hiddeni').fadeIn(2000);
-						addDataToStack(data)
-					}
-				});
+				publicFeedQuery.getAll()
+					.done(function (data) {
+						var filteredItems = filterItems(data.items, false);
+						if (filteredItems.length) {
+							//We don't want to overload the user with new data as we'll never run out of new images to see from Flickr
+							//so we give the user additional time after each poll
+							currentPollInterval += pollIntervalIncrement;
+							updateNewFeedItemsCount(filteredItems.length);
+							$showMore.hasClass('hiddeni') && $showMore.hide().removeClass('hiddeni').fadeIn(2000);
+							addDataToStack(data)
+						}
+					})
+					.always(loop); //Wait until we complete the ajax call before we start asking for more data
 				
-				loop();
 			}, currentPollInterval );			
 		}());
 		
