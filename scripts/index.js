@@ -4,7 +4,7 @@
 	,	stack = []
 	,	feedItemsCount = 0
 	,	$newFeedItemsCount = $('#new-feed-items-count')
-	,	publicFeedQuery = new Flikker.queries.PublicFeedQuery()
+	,	publicPhotosFeedQuery = new Flikker.queries.PublicPhotosFeedQuery()
 	,	personQuery = new Flikker.queries.PersonQuery()
 	,	templates = {}
 	,	$showMore = $('#show-more')
@@ -82,11 +82,11 @@
 		  return id.replace('@','');
 		});
 
-		publicFeedQuery.getAll().done(addFeedDataToList);
+		publicPhotosFeedQuery.getAll().done(addFeedDataToList);
 		(function loop() {
 			//Optimally we'd prefer to stream the data rather than poll for it
 			setTimeout(function () {
-				publicFeedQuery.getAll()
+				publicPhotosFeedQuery.getAll()
 					.done(function (data) {
 						var filteredItems = filterItems(data.items, false);
 						if (filteredItems.length) {
